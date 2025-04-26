@@ -6,7 +6,11 @@ from livereload import Server
 from more_itertools import chunked
 
 
-def on_reload(books):
+
+def on_reload():
+    with open("meta_data.json", "r", encoding="utf-8") as my_file:
+        books_json = my_file.read()
+    books = json.loads(books_json)
     env = Environment(
         loader=FileSystemLoader('.'),
         autoescape=select_autoescape(['html', 'xml'])
@@ -14,20 +18,22 @@ def on_reload(books):
 
     template = env.get_template('template.html')
 
-    two_collumns_books = list(chunked(books, 2))
-
-    rendered_page = template.render(
-        books=two_collumns_books,
-    )
-
-    with open('index.html', 'w', encoding="utf8") as file:
-        file.write(rendered_page)
+    ten_lists_books = list(chunked(books, 10))
+    for number, list_books in enumerate(ten_lists_books):
+        two_collumns_books = list(chunked(list_books, 2))
+        rendered_page = template.render(
+            books=two_collumns_books,
+        ) 
+        file_path = os.path.join('pages', f'index{number}.html')
+        with open(file_path, 'w', encoding="utf8") as file:
+            file.write(rendered_page)
 
 def main():
-    with open("meta_data.json", "r", encoding="utf-8") as my_file:
-        books_json = my_file.read()
-    books = json.loads(books_json)
-    on_reload(books)
+
+    if not os.path.isdir("pages"):
+        os.makedirs("pages")
+
+    on_reload()
 
     server = Server()
     server.watch('template.html', on_reload)
