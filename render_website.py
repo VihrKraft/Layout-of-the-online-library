@@ -24,8 +24,7 @@ def on_reload(books):
         file.write(rendered_page)
 
 def main():
-    file_path = os.path.join("books", "meta_data.json")
-    with open(file_path, "r", encoding="utf-8") as my_file:
+    with open("meta_data.json", "r", encoding="utf-8") as my_file:
         books_json = my_file.read()
     books = json.loads(books_json)
     on_reload(books)
