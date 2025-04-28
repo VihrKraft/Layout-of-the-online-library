@@ -11,7 +11,7 @@
     <title>template</title>
   </head>
   <body>
-    <div class="mx-auto" style="width: 74.2vw;">
+    <div class="mt-4 mx-auto" style="width: 74.2vw;">
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           {% if this_page > 0 %}
@@ -47,8 +47,12 @@
                   <div class="card-body">
                     <h5 class="card-title">{{ book["title"] }}</h5>
                     <p class="card-text">{{ book["author"] }}</p>
-                    <a href="../{{ book['book_path'] }}" target="_blank" rel="noopener noreferrer">Читать</a>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    {% for genre in genres %}
+                      <span class="badge badge-light">{{ genre }}</span>
+                    {% endfor %}
+                    <br>
+                    <br>
+                    <a href="../{{ book['book_path'] }}" target="_blank" rel="noopener noreferrer" class="">Читать</a>
                   </div>
                 </div>
               </div>

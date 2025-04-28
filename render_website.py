@@ -4,6 +4,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 import json
 from livereload import Server
 from more_itertools import chunked
+from os.path import split
 
 
 def on_reload():
@@ -21,14 +22,18 @@ def on_reload():
     for number, list_books in enumerate(ten_lists_books):
         two_collumns_books = list(chunked(list_books, 2))
         count_pages = len(ten_lists_books)
-        rendered_page = template.render(
-            books=two_collumns_books,
-            count_pages=count_pages,
-            this_page=number,
-        ) 
-        file_path = os.path.join('pages', f'index{number}.html')
-        with open(file_path, 'w', encoding="utf8") as file:
-            file.write(rendered_page)
+        for list_book in list_books:
+            genres = list_book["genres"].replace(".", "").split(",")
+            rendered_page = template.render(
+                books=two_collumns_books,
+                count_pages=count_pages,
+                this_page=number,
+                genres=genres,
+            ) 
+            file_path = os.path.join('pages', f'index{number}.html')
+            with open(file_path, 'w', encoding="utf8") as file:
+                file.write(rendered_page)
+        
 
 def main():
 
