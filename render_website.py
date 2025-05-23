@@ -44,9 +44,7 @@ def main():
 
     server = Server()
     server.watch('template.html', on_reload)
-    server.serve(root='.')
-    server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
-    server.serve_forever()
+    server.serve(root='.', default_filename='pages/index0.html')
 
 
 if __name__ == "__main__":
