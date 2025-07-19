@@ -13,8 +13,7 @@ def on_reload():
     parser.add_argument('--json', '-j', help='Путь к json файлу', default='meta_data.json')
     args = parser.parse_args()
     with open(args.json, "r", encoding="utf-8") as my_file:
-        books_json = my_file.read()
-    books = json.loads(books_json)
+        books = json.load(my_file)
     env = Environment(
         loader=FileSystemLoader('.'),
         autoescape=select_autoescape(['html', 'xml'])
