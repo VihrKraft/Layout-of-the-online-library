@@ -5,10 +5,14 @@ import json
 from livereload import Server
 from more_itertools import chunked
 from os.path import split
+import argparse
 
 
 def on_reload():
-    with open("meta_data.json", "r", encoding="utf-8") as my_file:
+    parser = argparse.ArgumentParser(description='Программа создает локальный сервер для отслеживания изменений на сайте')
+    parser.add_argument('--json', '-j', help='Путь к json файлу', default='meta_data.json')
+    args = parser.parse_args()
+    with open(args.json, "r", encoding="utf-8") as my_file:
         books_json = my_file.read()
     books = json.loads(books_json)
     env = Environment(
