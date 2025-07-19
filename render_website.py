@@ -8,6 +8,10 @@ from os.path import split
 import argparse
 
 
+NUMBER_COLLUMNS = 2
+NUMBER_BOOKS_ON_PAGE = 10
+
+
 def on_reload():
     parser = argparse.ArgumentParser(description='Программа создает локальный сервер для отслеживания изменений на сайте')
     parser.add_argument('--json', '-j', help='Путь к json файлу', default='meta_data.json')
@@ -21,9 +25,9 @@ def on_reload():
 
     template = env.get_template('template.html')
 
-    ten_lists_books = list(chunked(books, 10))
+    ten_lists_books = list(chunked(books, NUMBER_BOOKS_ON_PAGE))
     for number, list_books in enumerate(ten_lists_books):
-        two_collumns_books = list(chunked(list_books, 2))
+        two_collumns_books = list(chunked(list_books, NUMBER_COLLUMNS))
         count_pages = len(ten_lists_books)
         for list_book in list_books:
             genres = list_book["genres"].replace(".", "").split(",")
