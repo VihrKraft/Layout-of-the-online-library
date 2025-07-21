@@ -1,11 +1,10 @@
 import os
-from http.server import HTTPServer, SimpleHTTPRequestHandler
-from jinja2 import Environment, FileSystemLoader, select_autoescape
 import json
+import argparse
+
 from livereload import Server
 from more_itertools import chunked
-from os.path import split
-import argparse
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
 NUMBER_COLLUMNS = 2
