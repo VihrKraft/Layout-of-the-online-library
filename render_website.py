@@ -7,8 +7,8 @@ from more_itertools import chunked
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
-NUMBER_COLLUMNS = 2
-NUMBER_BOOKS_ON_PAGE = 10
+COLLUMNS_NUMBER = 2
+BOOKS_ON_PAGE = 10
 
 
 def on_reload():
@@ -24,9 +24,9 @@ def on_reload():
 
     template = env.get_template('template.html')
 
-    ten_lists_books = list(chunked(books, NUMBER_BOOKS_ON_PAGE))
+    ten_lists_books = list(chunked(books, BOOKS_ON_PAGE))
     for number, list_books in enumerate(ten_lists_books):
-        two_collumns_books = list(chunked(list_books, NUMBER_COLLUMNS))
+        two_collumns_books = list(chunked(list_books, COLLUMNS_NUMBER))
         count_pages = len(ten_lists_books)
         for list_book in list_books:
             genres = list_book['genres'].replace('.', '').split(',')
